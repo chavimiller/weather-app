@@ -1,0 +1,103 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Work Sans';
+    color: #FFFFFF;
+}
+
+@font-face {
+    font-family: 'Work Sans';
+    src: url("./fonts/WorkSans.ttf") format("truetype");
+    font-weight: 100 900;
+    font-style: normal;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(188, 200, 246);
+    margin: 20px 100px;
+}
+
+input {
+    border: none;
+    background-color: rgb(255, 255, 255, .45);
+    width: 700px;
+    height: 40px;
+    border-radius: 30px;
+    display: flex;
+    color: #FFFFFF;
+    font-size: 30px;
+    padding: 5px 30px;
+    outline: none;
+}
+
+input::placeholder {
+    color: rgb(255, 255, 255, .7);
+    font-size: 30px;
+    font-weight: 400;
+}
+
+.search-bar-container {
+    display: flex;
+    align-items: center;
+}
+
+.main-block {
+    display: flex;
+    flex-direction: column;
+    padding: 30px 8px;
+}
+
+.location-name {
+    font-size: 60px;
+    font-weight: 500;
+}
+
+.temp {
+    display: flex;
+}
+
+.degrees {
+    font-size: 100px;
+    font-weight: 500;
+}
+
+.feels-like {
+    padding-top: 65px;
+    padding-left: 12px;
+    font-size: 28px;
+    font-weight: 500;
+}
+
+.description {
+    font-size: 40px;
+    font-weight: 500;
+}
+
+.daily-block {
+    background-color: rgb(255, 255, 255, .45);
+    width: 1200px;
+    height: 120px;
+    border-radius: 32px;
+}
+
+.extra-info-block {
+    display: flex;
+    padding: 24px 0;
+    width: 1200px;
+    height: 200px;
+    justify-content: space-between;
+}
+
+.info-square {
+    width: 250px;
+    height: 250px;
+    background-color: rgb(255, 255, 255, .45);
+    border-radius: 40px;
+}
+
+
+
+
+
