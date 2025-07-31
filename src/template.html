@@ -14,7 +14,7 @@
         <button id="submit-search" type="submit"><img src="#" id="search-icon"></button>
       </div>
       <div class="main-block">
-        <div class="location-name">Jerusalem</div>
+        <div class="location-name"></div>
         <div class="temp">
           <div class="degrees">16°c</div>
           <div class="feels-like">/ feels like 16°c</div>
@@ -23,10 +23,25 @@
       </div>
       <div class="daily-block"></div>
       <div class="extra-info-block">
-        <div class="info-square"></div>
-        <div class="info-square"></div>
-        <div class="info-square"></div>
-        <div class="info-square"></div>
+        <div class="info-square">
+          <div class="info-square-title">UV Index</div>
+          <div id="uv-index" class="amount-percent"></div>
+        </div>
+        <div class="info-square">
+          <div class="info-square-title">Humidity</div>
+          <div id="humidity-percent" class="amount-percent"></div>
+        </div>
+        <div class="info-square">
+          <div class="precipitation-title">Chance of Precipitation</div>
+          <div id="precipitation-percent" class="amount-percent"></div>
+        </div>
+        <div class="info-square">
+          <div class="sunrise-title">Sunrise</div>
+          <div id="sunrise-time" class="time"></div>
+          <br>
+          <div class="sunrise-title">Sunset</div>
+          <div id="sunset-time" class="time"></div>
+        </div>
       </div>
     </div>
 </body>
