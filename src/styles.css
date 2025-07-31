@@ -13,9 +13,10 @@
 }
 
 body {
-    width: 100vw;
-    height: 100vh;
-    background-color: rgb(188, 200, 246);
+    background-color: rgb(179, 179, 179);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     margin: 20px 100px;
 }
 
