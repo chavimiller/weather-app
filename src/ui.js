@@ -8,6 +8,8 @@ import cloudy from "./images/CloudyOvercast.jpg";
 import partlyCloudyDay from "./images/PartlyCloudyDay.jpg";
 import partlyCloudyNight from "./images/PartlyCloudyNight.jpg";
 
+import { format, parse } from "date-fns";
+
 const locationName = document.querySelector(".location-name");
 const degreesNum = document.querySelector(".degrees");
 const feelsLike = document.querySelector(".feels-like");
