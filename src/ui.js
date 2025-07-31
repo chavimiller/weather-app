@@ -8,7 +8,7 @@ import cloudy from "./images/CloudyOvercast.jpg";
 import partlyCloudyDay from "./images/PartlyCloudyDay.jpg";
 import partlyCloudyNight from "./images/PartlyCloudyNight.jpg";
 
-import { format, parse } from "date-fns";
+import { toZonedTime, format } from "date-fns-tz";
 
 const locationName = document.querySelector(".location-name");
 const degreesNum = document.querySelector(".degrees");
@@ -53,8 +53,23 @@ export function updateWeatherDisplay(data) {
   uvIndex.textContent = data.days[0].uvindex;
   humidityPercent.textContent = `${Math.round(data.days[0].humidity)}%`;
   precip.textContent = `${Math.round(data.days[0].precipprob)}%`;
-  sunriseTime.textContent = data.days[0].sunrise;
-  sunsetTime.textContent = data.days[0].sunset;
+
+  const getTimeZone = data.timezone;
+  const getSunriseEpoch = data.days[0].sunriseEpoch;
+  const getSunsetEpoch = data.days[0].sunsetEpoch;
+
+  const formatSunrise = format(
+    toZonedTime(getSunriseEpoch * 1000, getTimeZone),
+    "h:mm a",
+    { getTimeZone }
+  );
+  const formatSunset = format(
+    toZonedTime(getSunsetEpoch * 1000, getTimeZone),
+    "h:mm a",
+    { getTimeZone }
+  );
+  sunriseTime.textContent = formatSunrise;
+  sunsetTime.textContent = formatSunset;
 }
 
 // UV Index Guidelines:
