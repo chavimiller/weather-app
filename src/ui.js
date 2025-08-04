@@ -20,6 +20,10 @@ const precip = document.querySelector("#precipitation-percent");
 const sunriseTime = document.querySelector("#sunrise-time");
 const sunsetTime = document.querySelector("#sunset-time");
 
+let isFahrenheit = true;
+let currentDegrees;
+let feelsLikeTemp;
+
 const iconConditions = [
   { icon: "snow", url: snowy },
   { icon: "rain", url: rainy },
@@ -34,7 +38,28 @@ const iconConditions = [
 
 function fToC(fahr) {
   const celsius = (fahr - 32) * (5 / 9);
-  return Math.round(celsius * 100) / 100;
+  return Math.round(celsius);
+}
+
+export function updateDegrees(data) {
+  currentDegrees = Math.round(data.days[0].temp);
+  feelsLikeTemp = Math.round(data.days[0].feelslike);
+  isFahrenheit = true;
+  updateDegreeUI();
+}
+
+function updateDegreeUI() {
+  const displayTemp = isFahrenheit ? currentDegrees : fToC(currentDegrees);
+  const displayFeels = isFahrenheit ? feelsLikeTemp : fToC(feelsLikeTemp);
+  const unit = isFahrenheit ? "°F" : "°C";
+
+  degreesNum.textContent = `${displayTemp}${unit}`;
+  feelsLike.textContent = `${displayFeels}${unit}`;
+}
+
+export function toggleDegreeUnit() {
+  isFahrenheit = !isFahrenheit;
+  updateDegreeUI();
 }
 
 export function updateBackground(condition) {
@@ -45,31 +70,28 @@ export function updateBackground(condition) {
   console.log(`Background set to ${backgroundUrl}`);
 }
 
+function timeZoneDisplay(timezone, epoch) {
+  const formattedTime = format(toZonedTime(epoch * 1000, timezone), "h:mm a", {
+    timeZone: timezone,
+  });
+  return formattedTime;
+}
+
 export function updateWeatherDisplay(data) {
   locationName.textContent = data.resolvedAddress;
-  degreesNum.textContent = `${data.days[0].temp}°F`;
-  feelsLike.textContent = `/ feels like ${data.days[0].feelslike}°F`;
   dayDescription.textContent = data.days[0].conditions;
   uvIndex.textContent = data.days[0].uvindex;
   humidityPercent.textContent = `${Math.round(data.days[0].humidity)}%`;
   precip.textContent = `${Math.round(data.days[0].precipprob)}%`;
 
-  const getTimeZone = data.timezone;
-  const getSunriseEpoch = data.days[0].sunriseEpoch;
-  const getSunsetEpoch = data.days[0].sunsetEpoch;
-
-  const formatSunrise = format(
-    toZonedTime(getSunriseEpoch * 1000, getTimeZone),
-    "h:mm a",
-    { getTimeZone }
+  sunriseTime.textContent = timeZoneDisplay(
+    data.timezone,
+    data.days[0].sunriseEpoch
   );
-  const formatSunset = format(
-    toZonedTime(getSunsetEpoch * 1000, getTimeZone),
-    "h:mm a",
-    { getTimeZone }
+  sunsetTime.textContent = timeZoneDisplay(
+    data.timezone,
+    data.days[0].sunsetEpoch
   );
-  sunriseTime.textContent = formatSunrise;
-  sunsetTime.textContent = formatSunset;
 }
 
 // UV Index Guidelines:
