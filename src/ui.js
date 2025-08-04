@@ -19,6 +19,7 @@ const humidityPercent = document.querySelector("#humidity-percent");
 const precip = document.querySelector("#precipitation-percent");
 const sunriseTime = document.querySelector("#sunrise-time");
 const sunsetTime = document.querySelector("#sunset-time");
+const dailyBlock = document.querySelector(".daily-block");
 
 let isFahrenheit = true;
 let currentDegrees;
@@ -42,8 +43,8 @@ function fToC(fahr) {
 }
 
 export function updateDegrees(data) {
-  currentDegrees = Math.round(data.days[0].temp);
-  feelsLikeTemp = Math.round(data.days[0].feelslike);
+  currentDegrees = Math.round(data.currentConditions.temp);
+  feelsLikeTemp = Math.round(data.currentConditions.feelslike);
   isFahrenheit = true;
   updateDegreeUI();
 }
@@ -79,19 +80,43 @@ function timeZoneDisplay(timezone, epoch) {
 
 export function updateWeatherDisplay(data) {
   locationName.textContent = data.resolvedAddress;
-  dayDescription.textContent = data.days[0].conditions;
-  uvIndex.textContent = data.days[0].uvindex;
-  humidityPercent.textContent = `${Math.round(data.days[0].humidity)}%`;
-  precip.textContent = `${Math.round(data.days[0].precipprob)}%`;
+  dayDescription.textContent = data.currentConditions.conditions;
+  uvIndex.textContent = data.currentConditions.uvindex;
+  humidityPercent.textContent = `${Math.round(
+    data.currentConditions.humidity
+  )}%`;
+  precip.textContent = `${Math.round(data.currentConditions.precipprob)}%`;
 
   sunriseTime.textContent = timeZoneDisplay(
     data.timezone,
-    data.days[0].sunriseEpoch
+    data.currentConditions.sunriseEpoch
   );
   sunsetTime.textContent = timeZoneDisplay(
     data.timezone,
-    data.days[0].sunsetEpoch
+    data.currentConditions.sunsetEpoch
   );
+}
+
+export function updateForecast(data) {
+  for (let i = 1; i < 6; i++) {
+    let dailyForecast = document.createElement("div");
+    let day = document.createElement("div");
+    let dailyTemp = document.createElement("div");
+
+    let epoch = data.days[i].datetimeEpoch;
+    let timeZone = data.timezone;
+
+    let convertedEpoch = toZonedTime(epoch * 1000, timeZone);
+    let dayOfWeek = format(convertedEpoch, "EEEE", { timeZone });
+    console.log(dayOfWeek);
+
+    day.textContent = dayOfWeek;
+    dailyTemp.textContent = data.days[i].temp;
+
+    dailyBlock.appendChild(dailyForecast);
+    dailyForecast.appendChild(day);
+    dailyForecast.appendChild(dailyTemp);
+  }
 }
 
 // UV Index Guidelines:

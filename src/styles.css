@@ -101,8 +101,23 @@ input::placeholder {
 .daily-block {
     background-color: rgb(255, 255, 255, .45);
     width: 1200px;
-    height: 100px;
+    height: 88px;
     border-radius: 32px;
+    display: flex;
+    justify-content: space-around;
+    padding-top: 12px;
+    font-size: 20px;
+}
+
+.daily-forecast {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.day {
+    font-size: 26px;
 }
 
 .extra-info-block {

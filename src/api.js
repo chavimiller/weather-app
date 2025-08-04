@@ -4,7 +4,7 @@ export async function getWeatherData(input = "Jerusalem") {
   let location = input;
   try {
     const response = await fetch(
-      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/today?unitGroup=us&key=${myApiKey}&contentType=json&lang=en`,
+      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/next7days?unitGroup=us&key=${myApiKey}&contentType=json&lang=en`,
       { mode: "cors" }
     );
     const weatherData = await response.json();
