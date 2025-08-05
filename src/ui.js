@@ -25,6 +25,8 @@ let isFahrenheit = true;
 let currentDegrees;
 let feelsLikeTemp;
 
+const forecastArray = [];
+
 const iconConditions = [
   { icon: "snow", url: snowy },
   { icon: "rain", url: rainy },
@@ -56,6 +58,11 @@ function updateDegreeUI() {
 
   degreesNum.textContent = `${displayTemp}${unit}`;
   feelsLike.textContent = `${displayFeels}${unit}`;
+
+  forecastArray.forEach(({ element, tempF }) => {
+    const displayTemperature = isFahrenheit ? tempF : fToC(tempF);
+    element.textContent = `${displayTemperature}${unit}`;
+  });
 }
 
 export function toggleDegreeUnit() {
@@ -98,6 +105,9 @@ export function updateWeatherDisplay(data) {
 }
 
 export function updateForecast(data) {
+  dailyBlock.innerHTML = "";
+  forecastArray.length = 0;
+
   for (let i = 1; i < 6; i++) {
     let dailyForecast = document.createElement("div");
     let day = document.createElement("div");
@@ -105,17 +115,21 @@ export function updateForecast(data) {
 
     let epoch = data.days[i].datetimeEpoch;
     let timeZone = data.timezone;
-
     let convertedEpoch = toZonedTime(epoch * 1000, timeZone);
     let dayOfWeek = format(convertedEpoch, "EEEE", { timeZone });
-    console.log(dayOfWeek);
+    let tempF = Math.round(data.days[i].temp);
 
     day.textContent = dayOfWeek;
-    dailyTemp.textContent = data.days[i].temp;
+    dailyTemp.textContent = `${tempF}°F`;
+
+    dailyForecast.classList.add("daily-forecast");
+    day.classList.add("day");
 
     dailyBlock.appendChild(dailyForecast);
     dailyForecast.appendChild(day);
     dailyForecast.appendChild(dailyTemp);
+
+    forecastArray.push({ element: dailyTemp, tempF });
   }
 }
 
